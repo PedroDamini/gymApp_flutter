@@ -1,4 +1,5 @@
 import 'package:flutte_gym_app/_common/my_colors.dart';
+import 'package:flutte_gym_app/components/field_decoration.dart';
 import 'package:flutter/material.dart';
 
 class AuthView extends StatefulWidget {
@@ -23,8 +24,8 @@ class _AuthViewState extends State<AuthView> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  MyColors.BlueTopGradient,
-                  MyColors.BlueBottomGradient,
+                  MyColors.GreenTopGradient,
+                  MyColors.GreenBottomGradient,
                 ],
               ),
             ),
@@ -52,30 +53,31 @@ class _AuthViewState extends State<AuthView> {
                         height: 32,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text("E-mail"),
-                        ),
+                        decoration: getAuthenticationInputDecoration("E-mail")
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          label: Text("Senha"),
-                        ),
+                        decoration: getAuthenticationInputDecoration("Senha"),
                         obscureText: true,
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       Visibility(
                         visible: !queroEntrar,
                         child: Column(
                           children: [
                             TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text("Confirme Senha"),
-                              ),
+                              decoration: getAuthenticationInputDecoration("Confirme a Senha"),
                               obscureText: true,
                             ),
+                            const SizedBox(
+                              height: 10,
+                            ),
                             TextFormField(
-                              decoration: const InputDecoration(
-                                label: Text("Nome"),
-                              ),
+                              decoration: getAuthenticationInputDecoration("Nome")
                             ),
                           ],
                         ),
