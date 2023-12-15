@@ -44,7 +44,7 @@ class _AuthViewState extends State<AuthView> {
                     color: Colors.white,
                   ),
                 ),
-                TextFormField(),
+                TextFormField(), 
               ],
             ),
           ),
