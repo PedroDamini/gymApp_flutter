@@ -1,8 +1,15 @@
 import 'package:flutte_gym_app/_common/my_colors.dart';
 import 'package:flutter/material.dart';
 
-class AuthView extends StatelessWidget {
+class AuthView extends StatefulWidget {
   const AuthView({super.key});
+
+  @override
+  State<AuthView> createState() => _AuthViewState();
+}
+
+class _AuthViewState extends State<AuthView> {
+  bool queroEntrar = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,21 +29,24 @@ class AuthView extends StatelessWidget {
               ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Image.asset("assets/logo.png", height: 128,),
-              const Text(
-                "GymApp",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+          Form(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.asset("assets/logo.png", height: 128,),
+                const Text(
+                  "GymApp",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 38,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
-              )
-            ],
+                TextFormField(),
+              ],
+            ),
           ),
         ],
       ),
