@@ -1,3 +1,5 @@
+// import 'dart:js_util';
+
 import 'package:flutte_gym_app/_common/my_colors.dart';
 import 'package:flutte_gym_app/components/field_decoration.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +55,21 @@ class _AuthViewState extends State<AuthView> {
                         height: 32,
                       ),
                       TextFormField(
-                        decoration: getAuthenticationInputDecoration("E-mail")
+                        decoration: getAuthenticationInputDecoration("E-mail"),
+                        validator: (String? value) {
+                          if (value == null){
+                            return "O e-mail não pode ser vazio";
+                          }
+                          if (value.contains("@")){
+                            return "O e-mail deve ter @";
+                          }
+                          if (value.length > 10){
+                            return "tamanho minimo não atingido"; 
+                          }
+                          else{
+                            return null;
+                          }
+                        },
                       ),
                       const SizedBox(
                         height: 10,
