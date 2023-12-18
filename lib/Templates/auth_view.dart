@@ -2,6 +2,7 @@
 
 import 'package:flutte_gym_app/_common/my_colors.dart';
 import 'package:flutte_gym_app/components/field_decoration.dart';
+import 'package:flutte_gym_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class AuthView extends StatefulWidget {
@@ -14,6 +15,13 @@ class AuthView extends StatefulWidget {
 class _AuthViewState extends State<AuthView> {
   bool queroEntrar = true;
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _senhaController = TextEditingController();
+  TextEditingController _confirmacaoSenhaController = TextEditingController();
+  TextEditingController _nomeController = TextEditingController();
+
+  AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -57,6 +65,7 @@ class _AuthViewState extends State<AuthView> {
                         height: 32,
                       ),
                       TextFormField(
+                        controller: _emailController,
                         decoration: getAuthenticationInputDecoration("E-mail"),
                         validator: (String? value) {
                           if (value == null){
@@ -77,6 +86,7 @@ class _AuthViewState extends State<AuthView> {
                         height: 10,
                       ),
                       TextFormField(
+                        controller: _senhaController,
                         decoration: getAuthenticationInputDecoration("Senha"),
                         obscureText: true,
                         validator: (String? value) {
@@ -99,6 +109,7 @@ class _AuthViewState extends State<AuthView> {
                         child: Column(
                           children: [
                             TextFormField(
+                              controller: _confirmacaoSenhaController,
                               decoration: getAuthenticationInputDecoration("Confirme a Senha"),
                               obscureText: true,
                               validator: (String? value) {
@@ -117,6 +128,7 @@ class _AuthViewState extends State<AuthView> {
                               height: 10,
                             ),
                             TextFormField(
+                              controller: _nomeController,
                               decoration: getAuthenticationInputDecoration("Nome"),
                               validator: (String? value) {
                                 if (value == null){
@@ -162,10 +174,23 @@ class _AuthViewState extends State<AuthView> {
 
 
   principalButtonOnpressed() {
+    String email = _emailController.text;
+    String senha = _senhaController.text;
+    String confirmacaoSenha = _confirmacaoSenhaController.text;
+    String nome = _nomeController.text;
+    
     if (_formKey.currentState!.validate()) {
-      print("Form Valido");
+      if (queroEntrar){
+        print("Entrada validada");
+      }else {
+        print("${_emailController.text}, ${_senhaController.text}, ${_confirmacaoSenhaController.text}, ${_nomeController.text}");
+        _authService.cadastrarUsuario(email: email, 
+                                      senha: senha, 
+                                      confirmacaoSenha: confirmacaoSenha,
+                                      nome: nome);
+      }
     } else {
-      print("Fomr invalido");
+      print("cadastro valido");
     }
   }
 }
