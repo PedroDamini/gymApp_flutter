@@ -13,6 +13,7 @@ class AuthView extends StatefulWidget {
 
 class _AuthViewState extends State<AuthView> {
   bool queroEntrar = true;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,7 @@ class _AuthViewState extends State<AuthView> {
           Padding(
             padding: const EdgeInsets.all(16),
             child: Form(
+              key: _formKey,
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -60,11 +62,11 @@ class _AuthViewState extends State<AuthView> {
                           if (value == null){
                             return "O e-mail não pode ser vazio";
                           }
-                          if (value.contains("@")){
-                            return "O e-mail deve ter @";
-                          }
-                          if (value.length > 10){
+                          if (value.length < 5){
                             return "tamanho minimo não atingido"; 
+                          }
+                          if (!value.contains('@')){
+                            return "E-mail inválido";
                           }
                           else{
                             return null;
@@ -77,6 +79,17 @@ class _AuthViewState extends State<AuthView> {
                       TextFormField(
                         decoration: getAuthenticationInputDecoration("Senha"),
                         obscureText: true,
+                        validator: (String? value) {
+                          if (value == null){
+                            return "A senha não pode ser vazio";
+                          }
+                          if (value.length < 5){
+                            return "tamanho minimo não atingido"; 
+                          }
+                          else{
+                            return null;
+                          }
+                        }
                       ),
                       const SizedBox(
                         height: 10,
@@ -88,12 +101,34 @@ class _AuthViewState extends State<AuthView> {
                             TextFormField(
                               decoration: getAuthenticationInputDecoration("Confirme a Senha"),
                               obscureText: true,
+                              validator: (String? value) {
+                                if (value == null){
+                                  return "A confirmação de senha não pode ser vazio";
+                                }
+                                if (value.length < 5){
+                                  return "tamanho minimo não atingido"; 
+                                }
+                                else{
+                                  return null;
+                                }
+                              }
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             TextFormField(
-                              decoration: getAuthenticationInputDecoration("Nome")
+                              decoration: getAuthenticationInputDecoration("Nome"),
+                              validator: (String? value) {
+                                if (value == null){
+                                  return "O nome não pode ser vazio";
+                                }
+                                if (value.length < 2){
+                                  return "tamanho minimo não atingido"; 
+                                }
+                                else{
+                                  return null;
+                                }
+                              }
                             ),
                           ],
                         ),
@@ -102,7 +137,9 @@ class _AuthViewState extends State<AuthView> {
                         height: 20,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          principalButtonOnpressed();
+                        },
                         child: Text((queroEntrar)? "Entrar": "Cadastrar"),
                       ),
                       TextButton(
@@ -121,5 +158,14 @@ class _AuthViewState extends State<AuthView> {
         ],
       ),
     );
+  }
+
+
+  principalButtonOnpressed() {
+    if (_formKey.currentState!.validate()) {
+      print("Form Valido");
+    } else {
+      print("Fomr invalido");
+    }
   }
 }
