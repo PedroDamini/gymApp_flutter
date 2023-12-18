@@ -1,6 +1,7 @@
 // import 'dart:js_util';
 
 import 'package:flutte_gym_app/_common/my_colors.dart';
+import 'package:flutte_gym_app/_common/my_snackbar.dart';
 import 'package:flutte_gym_app/components/field_decoration.dart';
 import 'package:flutte_gym_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -184,10 +185,20 @@ class _AuthViewState extends State<AuthView> {
         print("Entrada validada");
       }else {
         print("${_emailController.text}, ${_senhaController.text}, ${_confirmacaoSenhaController.text}, ${_nomeController.text}");
-        _authService.cadastrarUsuario(email: email, 
-                                      senha: senha, 
-                                      confirmacaoSenha: confirmacaoSenha,
-                                      nome: nome);
+        _authService.cadastrarUsuario(email: email, senha: senha, 
+                                      confirmacaoSenha: confirmacaoSenha,nome: nome)
+                                      .then(
+                                        (String? erro) {
+                                          if (erro != null){
+                                            showSnackBar(context: context, texto: erro);
+                                          }else{
+                                            showSnackBar(
+                                              context: context,
+                                              texto: "Cadastro Efetuado com Sucesso", 
+                                              isErro: false,
+                                            );
+                                          }
+                                        });
       }
     } else {
       print("cadastro valido");
